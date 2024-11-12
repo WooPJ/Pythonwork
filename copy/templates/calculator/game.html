@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가위바위보</title>
+    <link rel="stylesheet" href="cal.css">
+</head>
+
+<body>
+    <script>
+        function scissor() {
+            alert('가위를 눌렀습니다!');
+        }
+        function rock() {
+            alert('바위를 눌렀습니다!');
+        }
+        function paper() {
+            alert('보를 눌렀습니다!');
+        }
+        var num1 = 1;
+        var num2 = 4;
+
+        function plus() {
+            plusValue = num1 + num2;
+            alert(plusValue);
+        }
+        const ran1 = Math.random();
+        //부동소수점 난수 출력
+        //document.write(ran1 + '<br>');
+        function rand() {
+            alert(ran1);
+        }
+        //정수 난수 출력
+        // (3) 0 <= random <= 9
+        const rand_0_9 = Math.floor(Math.random() * 10);
+        //document.write('(3) : ' + rand_0_9 + '<br>');
+        function rand1(){
+            alert(rand_0_9);
+        }
+    </script>
+    <div class="rocksiccorpaper" style="background: darkturquoise;">
+        <h1>가위바위보게임</h1>
+        <button onclick="scissor()">가위</button>
+        <button onclick="rock()">바위</button>
+        <button onclick="paper()">보</button>
+        <button onclick="plus()">합계</button>
+        <button onclick="rand()">난수(소수) 출력</button>
+        <button onclick="rand1()">난수(정수) 출력</button>
+    </div>
+
+    <div class="calculator">
+        <input type="text" name="output">
+        <input type="button" class="clear" value="C">
+        <input type="button" class="operator" value="/">
+        <input type="button" class="operator" value="+">
+        <input type="button" class="operator" value="-">
+        <input type="button" class="operator_result" value="=">
+        <input type="button" value="0">
+        <input type="button" value="1">
+        <input type="button" value="2">
+        <input type="button" value="3">
+        <input type="button" value="4">
+        <input type="button" value="5">
+        <input type="button" value="6">
+        <input type="button" value="7">
+        <input type="button" value="8">
+        <input type="button" value="9">
+    </div>
+</body>
+
+</html>

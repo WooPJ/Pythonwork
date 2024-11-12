@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="{{ url_for('static', filename='css/blog.css') }}" rel="stylesheet" />
+  <!-- <link
+      href="{{ url_for('static', filename='css/index.css') }}"
+      rel="stylesheet"
+    /> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+  <script>
+    function insert(){
+      var title = $("#tbTitle").val();
+      var contents = $('#tbContents').val();
+      $.ajax({
+        type:"POST",
+        url: "/api/write2",
+        data:{
+          Title: title,
+          Contents: contents
+        },
+        success: function(response){
+          alert(response)
+          console.log(response)
+        }
+      })
+    }
+
+  </script>
+
+</head>
+
+<body style="background: darkseagreen">
+  <div style="background: darkseagreen;" class="white-box margin-50">
+    <div style="background: darkseagreen;" class="form_white">
+      <form>
+        <div class="w-100">
+          <h1>글 작성</h1>
+          <div>
+            <h3>제목</h3>
+            <input id="tbTitle" class="form_input" type="text" placeholder="제목 입력(4-100)" />
+          </div>
+        </div>
+        <div class="w-100">
+          <h3>내용</h3>
+          <textarea id="tbContents" class="form_input"></textarea>
+        </div>
+
+        <div class="w-100">
+          <h3>태그를 입력하세요</h3>
+          <input class="form_input" type="text" placeholder="태그 입력(최대 50개)" />
+        </div>
+
+        <div class="w-100 margin-t30">
+
+        </div>
+        <div style="clear: both"></div>
+      </form>
+      <button class="btn_home" onclick="window.location.href='/'">홈으로</button>
+      <button class="btn_api" onclick="call_write_api()">API</button>
+      <button class="btn_save" onclick="insert()">등록</button>
+    </div>
+  </div>
+</body>
+
+</html>

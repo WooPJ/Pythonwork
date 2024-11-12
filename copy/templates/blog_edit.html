@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="{{ url_for('static', filename='css/blog.css') }}" rel="stylesheet" />
+    <!-- <link
+      href="{{ url_for('static', filename='css/index.css') }}"
+      rel="stylesheet"
+    /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        function call_edit_api() {
+            var edit_title = $("#tbTitle").val();
+            var edit_contents = $('#tbContents').val();
+            var edit_idx = $('#Idx').val();
+
+            $.ajax({
+                type: "POST",
+                url: "/api/edit",
+                data: {
+                    Title: edit_title,
+                    Contents: edit_contents,
+                    Idx: edit_idx
+                },
+                success: function (response) {
+                    alert(response)
+                    console.log(response)
+                }
+            })
+        }
+
+
+    </script>
+
+</head>
+
+<body style="background: #f7f9fc">
+    <div class="white-box margin-50">
+        <div class="form_white">
+            <form>
+                <div class="w-100">
+                    <h1>게시물 수정</h1>
+                    <div>
+                        <h3>제목</h3>
+                        <input id="tbTitle" class="form_input" type="text" value="{{(title)}}" />
+                    </div>
+                </div>
+                <div class="w-100">
+                    <h3>내용</h3>
+                    <textarea id="tbContents" class="form_input">{{contents}}</textarea>
+                </div>
+
+                <div class="w-100">
+                    <h3>태그를 입력하세요</h3>
+                    <input class="form_input" type="text" placeholder="태그 입력(최대 50개)" />
+                </div>
+
+                <div class="w-100 margin-t30">
+
+                </div>
+                <div style="clear: both"></div>
+                <input type="hidden" id="Idx" value="{{index}}">
+            </form>
+            <button class="btn_home" onclick="window.location.href='/'">홈으로</button>
+            <button class="btn_save" onclick="call_edit_api()">수정</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>우평재의 블로그</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link href="{{ url_for('static', filename='css/blog.css') }}" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script>
+    function edit_test(idx) {
+      window.location.href = '/edit/' + idx;
+    }
+
+    function remove(idx) {
+
+      if (confirm("삭제하시겠습니까?")) {
+        $.ajax({
+          type: "POST",
+          url: "/api/remove",
+          data: {
+            Idx: idx
+          },
+          success: function (response) {
+            alert(response)
+            console.log(response)
+          }
+        })
+        alert("삭제되었습니다!");
+      } else {
+        alert("취소되었습니다.");
+      }
+      var remove_idx = $('#Idx').val();
+    }
+    function search() {
+      var keyword = $("#tbTitle").val();
+      window.location.href = '/search/' + keyword;
+    }
+
+    function check(idx){
+      window.location.href = '/check/' + idx;
+    }
+  </script>
+</head>
+
+<body style="background: #A7EEFF">
+  <div class="container">
+    <div class="white-box mt-70">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="d-flex padding-30">
+            <div class="flex-shrink-0 padding-r20">
+              <!-- <img src="blog_title_img.jpg" /> -->
+              <img type="button" src="{{ url_for('static', filename='img/blog_title_img.jpg')}}" onclick="window.location.href='/'"/>
+            </div>
+            <div class="flex-grow-1 ms-3 py-2">
+              <h3 class="mb-0">Woo Pyeong Jae</h3>
+              <p class="mb-2 width">Developer</p>
+              <!-- <button class="btn btn-primary">연락하기</button> -->
+            </div>
+          </div>
+        </div>
+        <!-- <div class="vr"></div> -->
+        <!-- <div class="col-md-1 border-left"></div> -->
+        <div class="col-md-4 mt-4 mt-md-1 border-left" style="font-size: 16px">
+          <div class="row padding-50">
+            <div class="col-5">
+              <p>Location</p>
+            </div>
+            <div class="col-6">
+              <p>서울 서대문구</p>
+            </div>
+            <div class="col-5">
+              <p>E-mail</p>
+            </div>
+            <div class="col-6">
+              <p>dnvudwo@naver.com</p>
+            </div>
+            <div class="col-5">
+              <p>Experience</p>
+            </div>
+            <div class="col-6">
+              <p>신입</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="white-box">
+          <p>우평재</p>
+        </div>
+      </div>
+
+
+      <div class="col-md-6">
+        <div class="white-box" style="padding:40px">
+          <!-- Start : static data -->
+          <table class="w-100">
+            <thead>
+              <tr> <!-- 테이블 로우-->
+                <th scope="col">번호</th> <!-- 테이블 헤드 -->
+                <th scope="col">제목</th>
+                <th scope="col">내용</th>
+                <th scope="col">작성일자</th>
+                <th scope="col">수정</th>
+                <th scope="col">삭제</th>
+                <th scope="col">확인</th>
+                <!-- <th scope="col">검색</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in data_list %}
+
+              <tr>
+                <td>{{i['boardIdx']}}</td>
+                <td>{{i['title']}}</td>
+                <td>{{i['contents']}}</td>
+                <td>{{i['regDT']}}</td>
+                <td><input type='button' onclick="edit_test({{i['boardIdx']}})" value="수정" /></td>
+                <td><input type="button" onclick="remove({{i['boardIdx']}})" value="삭제"></td>
+                <td><input type="button" onclick="check({{i['boardIdx']}})" value="확인"></td>
+              </tr>
+
+              {% endfor %}
+            </tbody>
+            <!-- End : static data -->
+          </table>
+        </div>
+      </div>
+
+
+      <div class="col-md-3">
+        <div class="white-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#6fbaf8"
+            class="bi bi-pencil-fill btn_write_center" viewBox="0 0 16 16">
+            <path
+              d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+          </svg>
+          <p style="padding: 20px; text-align: center; margin-bottom: 0px;">나의 기록 남기기</p>
+          <button type="button" class="btn btn-primary btn_write_center" onclick="window.location.href='/write'"
+            style="background-color: #6fbaf8; border: 0px #6fbaf8;">글쓰기</button>
+        </div>
+        <div class="white-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#6fbaf8"
+            class="bi bi-pencil-fill btn_write_center" viewBox="0 0 16 16">
+            <path
+              d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+          </svg>
+          <p style="padding: 20px; text-align: center; margin-bottom: 0px;">삭제된 게시글</p>
+          <button type="button" class="btn btn-primary btn_write_center" onclick="window.location.href='/rp'"
+            style="background-color: #6fbaf8; border: 0px #6fbaf8;">휴지통</button>
+        </div>
+        <div class="white-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#6fbaf8"
+            class="bi bi-pencil-fill btn_write_center" viewBox="0 0 16 16">
+            <path
+              d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+          </svg>
+          <p style="padding: 20px; text-align: center; margin-bottom: 0px;">게시글 검색</p>
+            <div style="vertical-align: middle;">
+              <input type="text" id="tbTitle" placeholder="제목을 검색하세요.">
+              <input type="button" onclick="search()" value="검색">
+            </div>
+        </div>
+        <div class="white-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#6fbaf8"
+            class="bi bi-pencil-fill btn_write_center" viewBox="0 0 16 16">
+            <path
+              d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+          </svg>
+          <p style="padding: 20px; text-align: center; margin-bottom: 0px;">검색</p>
+            <div style="vertical-align: middle;">
+              <input type="text" id="tbTitle" placeholder="제목을 검색하세요.">
+              <input type="button" onclick="window.location.href='/riot'" value="검색">
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script> -->
+</body>
+
+</html>

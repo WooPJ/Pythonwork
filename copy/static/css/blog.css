@@ -1,0 +1,104 @@
+/* 블로그메인 css */
+
+.white-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0.5px 0.5px 2px 1px #eee;
+}
+
+.mt-70 {
+  margin-top: 70px;
+}
+
+.padding-30 {
+  padding: 30px;
+}
+
+.padding-r20 {
+  padding-right: 20px;
+}
+
+.border-left {
+  border-left: 2px solid #ececec;
+}
+
+.padding-50 {
+  padding: 50px;
+}
+
+.btn_write_center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 블로그 게시물 table css */
+
+table {
+  width: 550px;
+  height: 200px;
+  border: 2px solid #ececec;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+th {
+  border: 2px solid #ececec;
+}
+
+td {
+  border: 2px solid #ececec;
+}
+/* 블로그 글쓰는 화면 css */
+
+.form_white {
+  background-color: white;
+  padding: 10px;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.form_input {
+  width: 100%;
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form_name {
+  width: 50%;
+  float: left;
+  padding: 10px;
+}
+
+.w-100 {
+  width: 100%;
+  padding: 10px;
+}
+
+.btn_save {
+  padding: 10px;
+  background-color: #6fbaf8;
+  border: 0px;
+  border-radius: 5px;
+  width: 100px;
+  float: right;
+  color: white;
+}
+
+.margin-50 {
+  margin: 50px;
+}
+
+.margin-t30 {
+  margin-top: 30px;
+}
+
+textarea {
+  height: 18em;
+  resize: none;
+}

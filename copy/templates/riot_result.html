@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summoner Search Result</title>
+</head>
+<body>
+    <h1>Summoner: {{ summoner_name }}</h1>
+    <h2>Recent Matches:</h2>
+    <ul>
+        {% for match in matches %}
+            <li>{{ match.gameId }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
