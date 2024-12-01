@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function remove(orderNum) {
+          if (confirm("삭제하시겠습니까?")) {
+            $.ajax({
+              type: "POST",
+              url: "/api/billremove",
+              data: {
+                orderNum : orderNum
+              },
+              success: function (response) {
+                alert("메뉴가 삭제되었습니다!");
+                console.log(response);
+                location.reload(); // 새로고침
+              }
+            })
+          } else {
+            alert("삭제가 취소되었습니다.");
+          }
+        }
+        function totalSum(){
+            $.ajax({
+              type: "POST",
+              url: "/api/totalSum",
+              data: {
+                 sumPrice : sumPrice
+              },
+              success: function (response) {
+                alert("계산할 총액입니다.");
+                console.log(response);
+                location.reload(); // 새로고침
+              }
+            })
+        }
+      </script>
+</head>
+<body>
+    <h3 align="center">주문 목록</h3>
+    <div>
+        <div>
+          <table border='1' align="center">
+            <thead>
+              <tr> 
+                <th scope="col">주문번호</th> 
+                <th scope="col">주문메뉴</th>
+                <th scope="col">수량</th>
+                <th scope="col">가격</th>
+                <th scope="col">총액</th>
+                <th scope="col">삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in order_list %}
+
+              <tr>
+                <td align="center" class="orderNum">{{i[0]}}</td>
+                <td>{{i[1]}}</td>
+                <td align="center">{{i[2]}}</td>
+                <td>{{i[3]}}</td>
+                <td>{{i[4]}}</td>
+                <td><input type='button' onclick='remove({{i[0]}})' value="삭제" /></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <input type="button" value="계산총액" onclick="totalSum(sumPrice)">
+          <hr>
+          <div align="center">
+            <input type="button" value="처음화면으로" onclick="window.location.href='/'"><br>
+            <input type="button" value="계산하기" onclick="window.location.href='/'">
+          </div>
+        </div>
+      </div>
+</body>
+</html> 

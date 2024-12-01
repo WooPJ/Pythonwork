@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문 목록</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+function select_menu() {
+  var menu = $("#orderResult").text(); // 메뉴 이름
+  var quantity = $("#orderQuantity").val(); // 수량
+  var price = $("#price").text().replace("원", ""); // 가격 (문자 "원" 제거)
+  var totalPrice = $("#totalPrice").text().replace("원", ""); 
+  
+  var uC = confirm('메뉴를 선택하시겠습니까?');
+  //uC = userConfirmed
+  if (!uC) {
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/api/order",
+    data: {
+      menu: menu,
+      quantity: quantity,
+      price: price,
+      totalPrice: totalPrice
+    },
+    success: function (response) {
+      alert('메뉴가 담겼습니다!');
+    }
+  });
+}
+
+    function choose_menu(event) {
+      // 선택한 라디오 버튼값
+      const menu = event.target.value;
+      const price = $(event.target).data("price");
+
+      $('#orderResult').text(menu);
+      $('#price').text(price + "원");
+    }
+
+    function choose_quan(event) {
+      // 메뉴가 선택되지 않은 경우 알림 표시
+      if ($('#orderResult').text().trim() === "") {
+        alert("메뉴를 먼저 선택해주세요.");
+        $('#orderQuantity').val("1"); // 수량 선택을 1로 초기화
+        return;
+      }
+      // 메뉴가 선택된 경우 수량 표시
+      $('#quantityResult').text(event.target.value);
+      sumPrice();
+    }
+    function sumPrice() {
+      var quantity = $("#orderQuantity").val();
+      var price = $("#price").text().replace("원", ""); 
+      if (!price || quantity === "") {
+        return; 
+      }
+      var total = quantity * parseInt(price); // 총액 계산
+      $('#totalPrice').text(total + "원"); 
+    }
+  </script>
+</head>
+
+<body>
+  <div class="parent" align="center">
+      <form>
+        <div class="w-100">
+          <h1 align="center"></h1>
+          <input type="button" value="메뉴목록으로" onclick="window.location.href='/'">
+          <div>
+            <h3>메뉴들</h3>
+            <!-- 1번옵션 라디오버튼 -->
+            <div>
+              <img src="static/img/kalramen.jpg" id="kalramen" alt="kalramen" width="170" height="170">
+              <input type="radio" id="option1" name="food" value="칼국수" data-price="7500" onclick="choose_menu(event)"
+                required><br>
+              <label for="option1">칼국수</label><br>7500원</br>
+            </div>
+            <!-- 2번옵션 라디오버튼 -->
+            <div>
+              <img src="static/img/kimchistew.jpg" id="kimchistew" alt="kimchistew" width="170" height="170">
+              <input type="radio" id="option2" name="food" value="김치찌개" data-price="8000"
+                onclick="choose_menu(event)"><br>
+              <label for="option2">김치찌개</label><br>8000원</br>
+            </div>
+            <!-- 3번옵션 라디오버튼 -->
+            <div>
+              <img src="static/img/djstew.jpg" id="djstew" alt="djstew" width="170" height="170">
+              <input type="radio" id="option3" name="food" value="된장찌개" data-price="7000"
+                onclick="choose_menu(event)"><br>
+              <label for="option3">된장찌개</label><br>7000원</br>
+            </div>
+            <!-- 4번옵션 라디오버튼 -->
+            <div>
+              <img src="static/img/sundubu.jpg" id="sundubu" alt="sundubu" width="170" height="170">
+              <input type="radio" id="option4" name="food" value="순두부찌개" data-price="8500"
+                onclick="choose_menu(event)"><br>
+              <label for="option4">순두부찌개</label><br>8500원</br>
+            </div>
+
+            <div>
+              <img src="static/img/ddukbul.jpg" id="ddukbul" alt="ddukbul" width="170" height="170">
+              <input type="radio" id="option5" name="food" value="뚝배기불고기" data-price="8000"
+                onclick="choose_menu(event)"><br>
+              <label for="option5">뚝배기불고기</label><br>8000원</br>
+            </div>
+
+            <div>
+              <img src="static/img/jaeuok.jpg" id="jaeuok" alt="jaeuok" width="170" height="170">
+              <input type="radio" id="option6" name="food" value="제육볶음" data-price="7500"
+                onclick="choose_menu(event)"><br>
+              <label for="option5">제육볶음</label><br>7500원</br>
+            </div>
+
+            <div>
+              <img src="static/img/rice.jpg" id="rice" alt="rice" width="170" height="170">
+              <input type="radio" id="option7" name="food" value="공기밥" data-price="1000"
+                onclick="choose_menu(event)"><br>
+              <label for="option6">공기밥</label><br>1000원</br>
+            </div>
+
+              <!-- 수량 선택 -->
+              <select name="quantity" id="orderQuantity" onchange="choose_quan(event)">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+              </select>           
+
+
+            <!-- 주문내역 -->
+            <table border='1' align="center">
+              <h2 align="center">주문내역</h2>
+              <tr>
+                <th>주문매뉴</th>
+                <th>가격</th>
+                <th>수량</th>
+                <th>총액</th>
+              </tr>
+              <tr>
+                <td id="orderResult"></td>
+                <td id="price"></td>
+                <td id="quantityResult" align="center"></td>
+                <td id="totalPrice"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </form>
+
+      <button class="btn_order" onclick="select_menu()">장바구니 담기</button><br>
+      <input type="button" value="주문내역바로가기" onclick="window.location.href='/bill'">
+  </div>
+</body>
+
+</html>
